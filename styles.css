@@ -1087,18 +1087,21 @@ img {
 
   .header-inner {
     gap: 0.8rem;
+    justify-items: center;
   }
 
   .logo {
     max-width: none;
+    margin-inline: auto;
   }
 
   .main-nav {
     position: fixed;
+    top: auto;
     left: 50%;
     right: auto;
     inset-inline: auto;
-    bottom: calc(0.85rem + env(safe-area-inset-bottom));
+    bottom: calc(0.9rem + env(safe-area-inset-bottom));
     z-index: 80;
     width: min(calc(100% - 2.1rem), 352px);
     margin-inline: 0;
@@ -1171,9 +1174,10 @@ img {
   }
 
   .header-actions {
-    width: 100%;
+    width: min(100%, 420px);
     display: grid;
     grid-template-columns: 68px minmax(0, 1fr);
+    justify-self: center;
   }
 
   .header-actions .btn {
@@ -1211,6 +1215,15 @@ img {
 
   .site-header {
     position: static;
+  }
+
+  .header-inner {
+    justify-items: center;
+    text-align: center;
+  }
+
+  .logo {
+    justify-self: center;
   }
 
   .hero-copy h1 {
@@ -1295,6 +1308,7 @@ img {
 @media (max-width: 520px) {
   .header-actions {
     grid-template-columns: 1fr;
+    width: min(100%, 340px);
   }
 
   .lang-toggle,
@@ -1315,7 +1329,7 @@ img {
     gap: 0.25rem;
     padding: 0.38rem;
     border-radius: 26px;
-    bottom: calc(0.75rem + env(safe-area-inset-bottom));
+    bottom: calc(0.8rem + env(safe-area-inset-bottom));
   }
 
   .nav-link {
