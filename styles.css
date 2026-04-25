@@ -1095,15 +1095,14 @@ img {
     margin-inline: auto;
   }
 
-  .main-nav {
+  body.has-mobile-nav .main-nav {
     position: fixed;
     top: auto;
     left: 50%;
     right: auto;
-    inset-inline: auto;
     bottom: calc(0.9rem + env(safe-area-inset-bottom));
     z-index: 80;
-    width: min(calc(100% - 2.1rem), 352px);
+    width: min(calc(100vw - 1.25rem), 352px);
     margin-inline: 0;
     display: grid;
     grid-template-columns: repeat(5, minmax(0, 1fr));
@@ -1113,21 +1112,56 @@ img {
     border-radius: 30px;
     justify-content: stretch;
     background:
-      linear-gradient(180deg, rgba(8, 20, 14, 0.94), rgba(8, 18, 13, 0.9));
-    border: 1px solid rgba(142, 255, 204, 0.14);
+      radial-gradient(circle at 18% 10%, rgba(255, 255, 255, 0.14), transparent 26%),
+      radial-gradient(circle at 82% 120%, rgba(108, 255, 181, 0.14), transparent 34%),
+      linear-gradient(180deg, rgba(20, 44, 38, 0.62), rgba(9, 23, 18, 0.46)),
+      linear-gradient(135deg, rgba(255, 255, 255, 0.12), rgba(255, 255, 255, 0.03) 45%, rgba(108, 255, 181, 0.08) 100%);
+    border: 1px solid rgba(210, 255, 238, 0.18);
     box-shadow:
       0 24px 60px rgba(0, 0, 0, 0.42),
-      0 0 0 1px rgba(255, 255, 255, 0.04) inset;
-    backdrop-filter: blur(22px);
+      0 0 40px rgba(108, 255, 181, 0.08),
+      inset 0 1px 0 rgba(255, 255, 255, 0.22),
+      inset 0 -18px 30px rgba(6, 18, 14, 0.2);
+    backdrop-filter: blur(28px) saturate(1.28);
+    -webkit-backdrop-filter: blur(28px) saturate(1.28);
     scrollbar-width: none;
     transform: translateX(-50%);
   }
 
-  .main-nav::-webkit-scrollbar {
+  body.has-mobile-nav .main-nav::before,
+  body.has-mobile-nav .main-nav::after {
+    content: "";
+    position: absolute;
+    pointer-events: none;
+  }
+
+  body.has-mobile-nav .main-nav::before {
+    inset: 1px 1px 46% 1px;
+    z-index: 0;
+    border-radius: inherit;
+    background:
+      linear-gradient(180deg, rgba(255, 255, 255, 0.26), rgba(255, 255, 255, 0.12) 38%, rgba(255, 255, 255, 0.03) 68%, transparent 100%);
+    opacity: 0.95;
+  }
+
+  body.has-mobile-nav .main-nav::after {
+    left: 12%;
+    right: 12%;
+    bottom: -10px;
+    height: 26px;
+    z-index: 0;
+    border-radius: 999px;
+    background: radial-gradient(circle at center, rgba(120, 255, 213, 0.28), transparent 72%);
+    filter: blur(14px);
+    opacity: 0.72;
+  }
+
+  body.has-mobile-nav .main-nav::-webkit-scrollbar {
     display: none;
   }
 
   .nav-link {
+    z-index: 2;
     min-height: 62px;
     padding: 0.75rem 0.3rem;
     display: flex;
@@ -1161,16 +1195,28 @@ img {
     opacity: 1;
   }
 
+  body.has-mobile-nav .nav-link.is-active {
+    color: #effff8;
+    text-shadow: 0 1px 10px rgba(255, 255, 255, 0.08);
+  }
+
   .nav-link:hover:not(.is-active) {
-    background: rgba(255, 255, 255, 0.035);
+    background: rgba(255, 255, 255, 0.05);
   }
 
   .nav-indicator {
+    z-index: 1;
     background:
-      linear-gradient(180deg, rgba(108, 255, 181, 0.24), rgba(108, 255, 181, 0.14));
+      radial-gradient(circle at 28% 18%, rgba(255, 255, 255, 0.42), transparent 30%),
+      linear-gradient(180deg, rgba(171, 255, 223, 0.2), rgba(108, 255, 181, 0.08) 50%, rgba(255, 255, 255, 0.04) 100%);
+    border: 1px solid rgba(255, 255, 255, 0.24);
     box-shadow:
-      inset 0 1px 0 rgba(255, 255, 255, 0.1),
-      0 12px 28px rgba(8, 22, 14, 0.34);
+      inset 0 1px 0 rgba(255, 255, 255, 0.26),
+      inset 0 -12px 18px rgba(6, 18, 14, 0.12),
+      0 12px 28px rgba(8, 22, 14, 0.24),
+      0 0 26px rgba(108, 255, 181, 0.08);
+    backdrop-filter: blur(18px) saturate(1.25);
+    -webkit-backdrop-filter: blur(18px) saturate(1.25);
   }
 
   .header-actions {
@@ -1324,8 +1370,8 @@ img {
     height: 24px;
   }
 
-  .main-nav {
-    width: min(calc(100% - 2rem), 320px);
+  body.has-mobile-nav .main-nav {
+    width: min(calc(100vw - 0.75rem), 320px);
     gap: 0.25rem;
     padding: 0.38rem;
     border-radius: 26px;

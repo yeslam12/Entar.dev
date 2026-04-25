@@ -1,5 +1,6 @@
 const body = document.body;
 const root = document.documentElement;
+const headerInner = document.querySelector(".header-inner");
 const languageToggle = document.getElementById("languageToggle");
 const mainNav = document.querySelector(".main-nav");
 const navLinks = document.querySelectorAll(".nav-link");
@@ -22,13 +23,20 @@ const formStatus = document.getElementById("formStatus");
 const visualCore = document.querySelector(".visual-core");
 const coreSphere = document.querySelector(".core-sphere");
 const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+const mobileNavQuery = window.matchMedia("(max-width: 860px)");
 let navIndicator = null;
+let navAnchor = null;
 
 if (mainNav) {
   navIndicator = document.createElement("span");
   navIndicator.className = "nav-indicator";
   navIndicator.setAttribute("aria-hidden", "true");
   mainNav.prepend(navIndicator);
+}
+
+if (mainNav && headerInner) {
+  navAnchor = document.createComment("main-nav-anchor");
+  headerInner.insertBefore(navAnchor, mainNav);
 }
 
 const services = {
@@ -224,6 +232,26 @@ function updateNavIndicator() {
   mainNav.classList.add("has-indicator");
 }
 
+function syncMobileNavPlacement() {
+  if (!mainNav || !navAnchor || !headerInner) {
+    return;
+  }
+
+  if (mobileNavQuery.matches) {
+    if (mainNav.parentElement !== document.body) {
+      document.body.append(mainNav);
+    }
+    body.classList.add("has-mobile-nav");
+  } else {
+    if (mainNav.parentElement !== headerInner) {
+      navAnchor.after(mainNav);
+    }
+    body.classList.remove("has-mobile-nav");
+  }
+
+  requestAnimationFrame(updateNavIndicator);
+}
+
 languageToggle.addEventListener("click", () => {
   setLanguage(currentLang === "ar" ? "en" : "ar");
 });
@@ -359,9 +387,17 @@ if (visualCore && coreSphere && !prefersReducedMotion.matches) {
   });
 }
 
-window.addEventListener("resize", updateNavIndicator);
-window.addEventListener("load", updateNavIndicator);
+window.addEventListener("resize", () => {
+  syncMobileNavPlacement();
+  updateNavIndicator();
+});
+window.addEventListener("load", () => {
+  syncMobileNavPlacement();
+  updateNavIndicator();
+});
+mobileNavQuery.addEventListener("change", syncMobileNavPlacement);
 
 renderService(activeService);
+syncMobileNavPlacement();
 setLanguage(currentLang);
 updateNavIndicator();
