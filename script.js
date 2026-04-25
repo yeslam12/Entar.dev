@@ -24,6 +24,7 @@ const visualCore = document.querySelector(".visual-core");
 const coreSphere = document.querySelector(".core-sphere");
 const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
 const mobileNavQuery = window.matchMedia("(max-width: 860px)");
+const whatsappNumber = "967771266189";
 let navIndicator = null;
 let navAnchor = null;
 
@@ -187,8 +188,8 @@ function setLanguage(lang) {
   if (formStatus.textContent.trim()) {
     formStatus.textContent =
       lang === "ar"
-        ? "تم استلام الطلب المبدئي. سنعود إليك بخطة أولية قريبًا."
-        : "Your request has been captured. We will get back to you with an initial plan shortly.";
+        ? "جاري فتح واتساب برسالتك الجاهزة على رقمنا الآن."
+        : "Opening WhatsApp now with your prefilled message.";
   }
   requestAnimationFrame(updateNavIndicator);
 }
@@ -250,6 +251,39 @@ function syncMobileNavPlacement() {
   }
 
   requestAnimationFrame(updateNavIndicator);
+}
+
+function buildWhatsAppMessage(formData) {
+  const typeText = formData.get("type");
+  const projectTypeMap = {
+    website: { ar: "موقع", en: "Website" },
+    dashboard: { ar: "لوحة تحكم", en: "Dashboard" },
+    ai: { ar: "نظام ذكاء اصطناعي", en: "AI System" },
+    branding: { ar: "هوية رقمية", en: "Branding" },
+  };
+  const typeLabel = projectTypeMap[typeText]?.[currentLang] || typeText;
+
+  if (currentLang === "ar") {
+    return [
+      "مرحبًا Entar Dev،",
+      "أرغب في مناقشة مشروع جديد.",
+      "",
+      `الاسم: ${formData.get("name")}`,
+      `البريد الإلكتروني: ${formData.get("email")}`,
+      `نوع المشروع: ${typeLabel}`,
+      `وصف مختصر: ${formData.get("brief")}`,
+    ].join("\n");
+  }
+
+  return [
+    "Hello Entar Dev,",
+    "I would like to discuss a new project.",
+    "",
+    `Name: ${formData.get("name")}`,
+    `Email: ${formData.get("email")}`,
+    `Project type: ${typeLabel}`,
+    `Brief: ${formData.get("brief")}`,
+  ].join("\n");
 }
 
 languageToggle.addEventListener("click", () => {
@@ -350,10 +384,14 @@ document.querySelectorAll("main section[id]").forEach((section) => {
 
 contactForm.addEventListener("submit", (event) => {
   event.preventDefault();
+  const formData = new FormData(contactForm);
+  const message = buildWhatsAppMessage(formData);
+  const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
   formStatus.textContent =
     currentLang === "ar"
-      ? "تم استلام الطلب المبدئي. سنعود إليك بخطة أولية قريبًا."
-      : "Your request has been captured. We will get back to you with an initial plan shortly.";
+      ? "جاري فتح واتساب برسالتك الجاهزة على رقمنا الآن."
+      : "Opening WhatsApp now with your prefilled message.";
+  window.open(whatsappUrl, "_blank", "noopener,noreferrer");
   contactForm.reset();
 });
 

@@ -880,6 +880,80 @@ img {
   max-width: 12ch;
 }
 
+.contact-shortcuts {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+  margin-top: 1.4rem;
+}
+
+.contact-link-card {
+  display: flex;
+  align-items: center;
+  gap: 0.9rem;
+  padding: 1rem 1.05rem;
+  border-radius: 22px;
+  transition: transform 180ms ease, border-color 180ms ease, box-shadow 180ms ease;
+}
+
+.contact-link-card:hover {
+  transform: translateY(-3px);
+  border-color: rgba(180, 255, 229, 0.28);
+}
+
+.contact-link-card--whatsapp {
+  background:
+    linear-gradient(180deg, rgba(15, 49, 31, 0.9), rgba(8, 24, 15, 0.72));
+}
+
+.contact-link-card--instagram {
+  background:
+    linear-gradient(180deg, rgba(42, 22, 36, 0.88), rgba(20, 15, 28, 0.72));
+}
+
+.contact-link-icon {
+  width: 52px;
+  height: 52px;
+  display: grid;
+  place-items: center;
+  border-radius: 18px;
+  flex: 0 0 auto;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.contact-link-icon svg {
+  width: 22px;
+  height: 22px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.contact-link-card--whatsapp .contact-link-icon {
+  color: #86ffc9;
+}
+
+.contact-link-card--instagram .contact-link-icon {
+  color: #ffd2ec;
+}
+
+.contact-link-copy {
+  display: grid;
+  gap: 0.2rem;
+}
+
+.contact-link-copy strong {
+  font-size: 1rem;
+}
+
+.contact-link-copy small {
+  color: var(--text-muted);
+  font-size: 0.9rem;
+}
+
 .form-row {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -930,6 +1004,12 @@ img {
   margin-top: 1rem;
 }
 
+.contact-hint {
+  margin: 0.8rem 0 0;
+  color: var(--text-muted);
+  font-size: 0.92rem;
+}
+
 .form-status {
   min-height: 1.5rem;
   margin: 0.8rem 0 0;
@@ -950,6 +1030,15 @@ img {
 .info-card strong {
   display: block;
   font-size: 1.55rem;
+}
+
+.info-link {
+  display: inline-flex;
+  align-items: center;
+  margin-top: 0.9rem;
+  color: var(--accent);
+  font-size: 0.95rem;
+  word-break: break-word;
 }
 
 .site-footer {
@@ -1272,6 +1361,36 @@ img {
     justify-self: center;
   }
 
+  .header-actions {
+    width: min(100%, 320px);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.65rem;
+  }
+
+  .lang-toggle,
+  .header-actions .btn {
+    width: auto;
+    min-height: 42px;
+  }
+
+  .lang-toggle {
+    min-width: 48px;
+    padding: 0.55rem 0.8rem;
+    border-radius: 999px;
+    font-size: 0.95rem;
+  }
+
+  .header-actions .btn {
+    padding: 0.7rem 1rem;
+    border-radius: 999px;
+    font-size: 0.92rem;
+    line-height: 1;
+    white-space: nowrap;
+    box-shadow: 0 12px 28px rgba(108, 255, 181, 0.16);
+  }
+
   .hero-copy h1 {
     font-size: clamp(2.2rem, 10vw, 3.8rem);
   }
@@ -1283,6 +1402,7 @@ img {
   .workflow-grid,
   .service-metrics,
   .form-row,
+  .contact-shortcuts,
   .visual-metrics {
     grid-template-columns: 1fr;
   }
@@ -1353,13 +1473,15 @@ img {
 
 @media (max-width: 520px) {
   .header-actions {
-    grid-template-columns: 1fr;
-    width: min(100%, 340px);
+    width: min(100%, 280px);
+    display: flex;
+    grid-template-columns: none;
+    justify-content: space-between;
   }
 
   .lang-toggle,
   .header-actions .btn {
-    width: 100%;
+    width: auto;
   }
 
   .logo {
@@ -1368,6 +1490,19 @@ img {
 
   .logo-image {
     height: 24px;
+  }
+
+  .lang-toggle {
+    min-width: 44px;
+    min-height: 40px;
+    padding: 0.48rem 0.72rem;
+    font-size: 0.88rem;
+  }
+
+  .header-actions .btn {
+    min-height: 40px;
+    padding: 0.62rem 0.9rem;
+    font-size: 0.82rem;
   }
 
   body.has-mobile-nav .main-nav {
